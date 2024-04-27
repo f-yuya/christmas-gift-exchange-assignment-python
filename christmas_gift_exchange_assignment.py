@@ -96,7 +96,7 @@ def circular_permutations[T](elements: list[T]) -> typing.Generator[list[T], typ
         yield list((elements[0],) + permutation)
 
 
-def main() -> None:
+def execute(members: list[Member]) -> None:
     '''
     処理を実行します。
 
@@ -105,10 +105,7 @@ def main() -> None:
     Exception
         すべてのパターンを検証したが、ペアが生成できない場合に送出する例外
     '''
-    with open('./members.json') as file:
-        members: list[Member] = json.load(file)
-
-    for pattern in circular_permutations(random.sample(members, len(members))):
+    for pattern in circular_permutations(members):
         pairs: list[tuple[Member, Member]] = create_pairs(pattern)
         if is_valid_all_pairs(list(pairs)):
             for pair_from, pair_to in pairs:
@@ -116,6 +113,15 @@ def main() -> None:
             return
 
     raise Exception('すべてのパターンを検証しましたが、ペアを生成できません。')
+
+
+def main() -> None:
+    '''
+    エントリーポイント
+    '''
+    with open('./members.json') as file:
+        members: list[Member] = json.load(file)
+    execute(random.sample(members, len(members)))
 
 
 if __name__ == '__main__':
