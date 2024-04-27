@@ -5,5 +5,13 @@
 		"--name",
 		"christmas-gift-exchange-assignment-python"
 	],
-	"remoteUser": "root"
+	"remoteUser": "root",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.isort",
+				"ms-python.autopep8"
+			]
+		}
+	}
 }
