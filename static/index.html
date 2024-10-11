@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="./favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今年のプレゼント担当はだ～れ？</title>
+    <script type="text/javascript" src="./jquery-3.7.1.min.js"></script>
+    <script>
+        $(() => {
+            function Model() {
+                this.members = [];
+
+                this.EVENTS = {
+                    LOAD_MEMBERS: 'LOAD_MEMBERS',
+                    TAKE_MEMBER: 'TAKE_MEMBER',
+                };
+            }
+
+            Model.prototype.load = function (members) {
+                const self = this;
+
+                self.members = members;
+                $(self).trigger(self.EVENTS.LOAD_MEMBERS);
+            };
+
+            Model.prototype.takeMember = function () {
+                const self = this;
+
+                const member = self.members.shift();
+                if (!member) return;
+
+                $(self).trigger(self.EVENTS.TAKE_MEMBER, [member]);
+            };
+
+            function View(model) {
+                this.model = model;
+            }
+
+            View.prototype.renderRoulette = function () {
+                const self = this;
+
+                let i = 0;
+                const interval = setInterval(function () {
+                    const member = self.model.members.at(i++ % self.model.members.length);
+                    if (!member) clearInterval(interval);
+                    $('#roulette').text(member ?? 'おわり');
+                }, 100);
+            };
+
+            View.prototype.renderCard = function (member) {
+                const self = this;
+
+                const $card = $('<p>', {
+                    class: 'card',
+                    text: member,
+                });
+                $('#list').append($card);
+            };
+
+            function Controller() {
+                this.model = new Model();
+                this.view = new View(this.model);
+
+                const self = this;
+
+                $('#button').on('click', function () {
+                    self.model.takeMember();
+                });
+
+                $(self.model).on(self.model.EVENTS.LOAD_MEMBERS, function () {
+                    self.view.renderRoulette();
+                });
+
+                $(self.model).on(self.model.EVENTS.TAKE_MEMBER, function (_, member) {
+                    self.view.renderCard(member);
+                });
+            }
+
+            Controller.prototype.init = async function () {
+                const self = this;
+
+                const response = await fetch('http://localhost:8000/api/members/random');
+                const members = await response.json();
+                self.model.load(members);
+            };
+
+            new Controller().init();
+        });
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            text-align: center;
+            background-color: aliceblue;
+            color: #444;
+            padding: 20px;
+
+            #roulette {
+                font-size: 2rem;
+                line-height: 8rem;
+            }
+
+            #button {
+                font-size: 1rem;
+                padding: 8px 16px;
+                background-color: cornflowerblue;
+                color: white;
+                border-radius: 4px;
+                border: none;
+                margin-bottom: 40px;
+            }
+
+            #list {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                height: 600px;
+                width: 60%;
+                margin: 0 auto;
+                gap: 20px;
+                align-items: center;
+
+                .card {
+                    font-size: 1.25rem;
+                    background-color: white;
+                    width: 400px;
+                    padding: 24px;
+                    border-radius: 8px;
+                    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="title">今年のプレゼント担当はだ～れ？</h1>
+    <p id="roulette">Loading...</p>
+    <button id="button">ねくすと</button>
+    <div id="list"></div>
+</body>
+
+</html>

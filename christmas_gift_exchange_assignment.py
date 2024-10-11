@@ -23,7 +23,13 @@ class Member(typing.TypedDict):
     exclusions: list[int]
 
 
-def is_valid_pair(pair: tuple[Member, Member]) -> bool:
+type Pair = tuple[Member, Member]
+'''
+Pair 型
+'''
+
+
+def is_valid_pair(pair: Pair) -> bool:
     '''
     ペアが正しいか検証します。
     相手が除外の対象になっていない場合は True を、除外の対象の場合は False を返します。
@@ -41,7 +47,7 @@ def is_valid_pair(pair: tuple[Member, Member]) -> bool:
     return member_to['no'] not in member_from['exclusions']
 
 
-def is_valid_all_pairs(pairs: list[tuple[Member, Member]]) -> bool:
+def is_valid_all_pairs(pairs: list[Pair]) -> bool:
     '''
     すべてのペアが正しいか検証します。
 
@@ -57,7 +63,7 @@ def is_valid_all_pairs(pairs: list[tuple[Member, Member]]) -> bool:
     return all(map(is_valid_pair, pairs))
 
 
-def create_pairs(members_from: list[Member]) -> list[tuple[Member, Member]]:
+def create_pairs(members_from: list[Member]) -> list[Pair]:
     '''
     メンバーのリストからペアのリストを作成します。
 
