@@ -7,47 +7,47 @@
   {
     "no": 2,
     "name": "No.2",
-    "exclusions": [6, 9, 14, 16, 17]
+    "exclusions": [6, 9, 14, 16, 17, 18]
   },
   {
     "no": 3,
     "name": "No.3",
-    "exclusions": [2, 6, 9, 16, 23]
+    "exclusions": [2, 6, 9, 16, 23, 25]
   },
   {
     "no": 6,
     "name": "No.6",
-    "exclusions": [2, 3, 15, 18, 23]
+    "exclusions": [2, 3, 15, 17, 18, 23]
   },
   {
     "no": 9,
     "name": "No.9",
-    "exclusions": [6, 14, 15, 16, 25]
+    "exclusions": [2, 6, 14, 15, 16, 25]
   },
   {
     "no": 14,
     "name": "No.14",
-    "exclusions": [2, 9, 15, 16, 17]
+    "exclusions": [2, 3, 9, 15, 16, 17]
   },
   {
     "no": 15,
     "name": "No.15",
-    "exclusions": [3, 14, 17, 18, 23]
+    "exclusions": [3, 9, 14, 17, 18, 23]
   },
   {
     "no": 16,
     "name": "No.16",
-    "exclusions": [3, 6, 15, 17]
+    "exclusions": [3, 6, 14, 15, 17]
   },
   {
     "no": 17,
     "name": "No.17",
-    "exclusions": [3, 6, 14, 15, 18]
+    "exclusions": [3, 6, 14, 15, 16, 18]
   },
   {
     "no": 18,
     "name": "No.18",
-    "exclusions": [2, 3, 14, 17, 25]
+    "exclusions": [2, 3, 6, 14, 17, 25]
   },
   {
     "no": 23,
@@ -57,6 +57,6 @@
   {
     "no": 25,
     "name": "No.25",
-    "exclusions": [9, 18]
+    "exclusions": [9, 15, 18]
   }
 ]
